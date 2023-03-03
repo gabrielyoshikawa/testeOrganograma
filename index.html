@@ -1,0 +1,119 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+
+  <body>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-org-chart@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-flextree@2.1.2/build/d3-flextree.js"></script>
+    <div
+      class="chart-container"
+      style="height: 1200px; background-color: #f6f6f6"
+    ></div>
+
+    <script>
+      var chart;
+      d3.csv(
+        'https://raw.githubusercontent.com/bumbeishvili/sample-data/main/org.csv'
+      ).then((dataFlattened) => {
+        chart = new d3.OrgChart()
+          .container('.chart-container')
+          .data(dataFlattened)
+          .nodeWidth((d) => 250)
+          .initialZoom(0.7)
+          .nodeHeight((d) => 175)
+          .childrenMargin((d) => 40)
+          .compactMarginBetween((d) => 15)
+          .compactMarginPair((d) => 80)
+          .nodeContent(function (d, i, arr, state) {
+            return `
+            <div class='DIV INVISIVEL ATRAS DA FOTO ????  WHOLE CONTENT ????'style="
+              padding-top:30px;
+              margin-left:1px;
+              border-radius:2px;
+              background-color: blanchedalmond;
+              overflow:visible";
+              height:${
+                d.height
+              }px;
+              >
+
+              <div class='CONTENT ???? HEIGHT: ABRE OS DE BAIXO' style="
+                padding-top:0px;
+                height:${
+                  d.height - 32
+                }px;
+                border:1px solid lightgray;"
+              >
+
+               <div style="
+                  margin-right:10px;
+                  margin-top:15px;
+                  float:right"
+                  >
+                  ${
+                    d.data.id
+                  }
+                </div>
+            
+               <div class='DIV AZUL SUPERIOR' style="
+                  margin-top:-30px;
+                  background-color:#3AB6E3;
+                  height:10px;
+                  border-radius:1px"
+                  width:${
+                    d.width - 2
+                  }px;
+                  >
+               </div>
+
+                <div style="
+                  padding:20px; 
+                  padding-top:35px;
+                  text-align:center">
+
+                    <div style="
+                      color:#111672;
+                      font-size:16px;
+                      font-weight:bold"
+                    > 
+                      ${
+                        d.data.name
+                      } 
+                    </div>
+
+                    <div style="
+                      color:#404040;
+                      font-size:16px;
+                      margin-top:4px"
+                      > 
+                      ${
+                        d.data.positionName
+                      } 
+                    </div>
+
+                </div> 
+
+                <div style="
+                  display:flex;
+                  justify-content:space-between;
+                  padding-left:15px;
+                  padding-right:15px;"
+                >
+
+                 <div> Manages: ${d.data._directSubordinates} 👤</div>  
+                 <div> Oversees: ${d.data._totalSubordinates} 👤</div>   
+                  
+                </div>
+                </div>     
+            </div>
+  `;
+          })
+          .render();
+      });
+    </script>
+  </body>
+
+</html>
